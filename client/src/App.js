@@ -5,7 +5,8 @@ import Team from './components/Team';
 import Login from './components/Login';
 import Methodology from './components/Methodology';
 import NotFoundPage from "./components/NotFoundPage";
-
+import Regions from './components/Regions';
+import { RegionContextProvider } from './contexts/RegionContext';
 import { HomeContextProvider } from './contexts/HomeContext';
 import { MapContextProvider } from './contexts/MapContext';
 import { MapMunicipioContextProvider } from './contexts/MapMunicipioContext';
@@ -46,6 +47,11 @@ const App = () => {
                       </MapMunicipioContextProvider>
                     </MapContextProvider>
                 </HomeContextProvider>
+            </Route>
+            <Route path='/regions' >
+              <RegionContextProvider>
+                <Regions/>
+              </RegionContextProvider>
             </Route>
             <Route path='/about-us' component={Team}/>
             <Route path='/methodology' component={Methodology}/>
