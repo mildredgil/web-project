@@ -71,11 +71,11 @@ const Header = ({ classes, fixed=false}) => {
           <LinkElement url='/perfil' element={
             <MenuItem><Typography variant="span" className={classes.title}>Mi Perfil</Typography></MenuItem>
           }/>
-          <LinkElement url='/methodology' element={
-            <MenuItem><Typography variant="span" className={classes.title}>Metodología</Typography></MenuItem>
-          }/>
           <LinkElement url='/regions' element={
             <MenuItem><Typography variant="span" className={classes.title}>Seguimiento por Región</Typography></MenuItem>
+          }/>
+          <LinkElement url='/methodology' element={
+            <MenuItem><Typography variant="span" className={classes.title}>Metodología</Typography></MenuItem>
           }/>
           <LinkElement url='/about-us' element={
             <MenuItem><Typography variant="span" className={classes.title}>Nosotros</Typography></MenuItem>

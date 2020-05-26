@@ -13,7 +13,10 @@ import { RegionContextProvider } from './contexts/RegionContext';
 import { HomeContextProvider } from './contexts/HomeContext';
 import { MapContextProvider } from './contexts/MapContext';
 import { MapMunicipioContextProvider } from './contexts/MapMunicipioContext';
-
+import AvailableBeds from './components/AvailableBeds';
+import ConfirmAge from './components/ConfirmAge';
+import MunicipalitiesFollow from './components/MunicipalitiesFollow';
+import DistributionEstate from './components/DistributionEstate';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -58,6 +61,10 @@ const App = () => {
             </Route>
             <Route path='/about-us' component={Team}/>
             <Route path='/methodology' component={Methodology}/>
+            <Route path='/availablebeds' component={AvailableBeds}/>
+            <Route path='/confirmage' component={ConfirmAge}/>
+            <Route path='/municipalitiesfollow' component={MunicipalitiesFollow}/>
+            <Route path='/distributionestate' component={DistributionEstate}/>
             <Route path='/login' component={Login}/>
             <Route path='/perfil' component={User}/>
             <Route path='/adminPanel' component={AdminPanel}/>
