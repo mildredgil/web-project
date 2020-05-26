@@ -9,3 +9,4 @@ export const RED = '#cb181d';
 export const WHITE = '#fafafa';
 export const GRAY = '#95a6a552';
 export const GRAY_LIGHT = '#a2a2a2';
+export const GRAY_LIGHTER = '#dde2e2';

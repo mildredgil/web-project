@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import Team from './components/Team';
 import Login from './components/Login';
 import Methodology from './components/Methodology';
 import NotFoundPage from "./components/NotFoundPage";
-import Regions from './components/Regions';
+import User from "./components/User";
+import Regions from "./components/Regions";
+import AdminPanel from "./components/Admin";
+
 import { RegionContextProvider } from './contexts/RegionContext';
 import { HomeContextProvider } from './contexts/HomeContext';
 import { MapContextProvider } from './contexts/MapContext';
@@ -56,6 +59,8 @@ const App = () => {
             <Route path='/about-us' component={Team}/>
             <Route path='/methodology' component={Methodology}/>
             <Route path='/login' component={Login}/>
+            <Route path='/perfil' component={User}/>
+            <Route path='/adminPanel' component={AdminPanel}/>
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </BrowserRouter>

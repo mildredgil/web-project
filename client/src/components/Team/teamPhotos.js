@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import * as colors from '../../constants/colors';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
 import MailIcon from '@material-ui/icons/Mail';
 import TwitterIcon from '@material-ui/icons/Twitter';
 

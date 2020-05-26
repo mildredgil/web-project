@@ -22,40 +22,38 @@ const Login = ({classes}) => {
         <Header fixed={true}/>
         <div className={classes.teamsContainer}>
         <Typography className={classes.h1} variant={'h1'}>Bienvenido</Typography>
-            <FormControl fullWidth>
-                <TextField
-                id="outlined-full-width"
-                label="Correo Electronico"
-                style={{ margin: 8 }}
-                placeholder="ejemplo@itesm.mx"
-                fullWidth
-                type="email"
-                margin="normal"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                variant="outlined"
-                />
-                <TextField
-                id="outlined-full-width"
-                label="Contraseña"
-                style={{ margin: 8 }}
-                placeholder="Placeholder"
-                helperText="8 caracteres"
-                fullWidth
-                margin="normal"
-                type="password"
-                required
-                minlength="8"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                variant="outlined"
-                />
-            </FormControl>
-            <Grid container item xs direction="row"  justify="space-around"  alignItems="right">
-                <Button className={classes.button}>Iniciar</Button>
-            </Grid>
+          <FormControl fullWidth>
+              <TextField
+              id="outlined-full-width"
+              label="Correo Electronico"
+              placeholder="ejemplo@itesm.mx"
+              fullWidth
+              type="email"
+              margin="normal"
+              InputLabelProps={{
+                  shrink: true,
+              }}
+              variant="outlined"
+              />
+              <TextField
+              id="outlined-full-width"
+              label="Contraseña"
+              placeholder="Placeholder"
+              helperText="8 caracteres"
+              fullWidth
+              margin="normal"
+              type="password"
+              required
+              minlength="8"
+              InputLabelProps={{
+                  shrink: true,
+              }}
+              variant="outlined"
+              />
+          </FormControl>
+          <Grid container item xs direction="row"  justify="space-around"  alignItems="right">
+              <Button className={classes.button}>Iniciar</Button>
+          </Grid>
         </div>
         <Footer/>
       </div>
@@ -87,15 +85,9 @@ const styles = () => ({
     backgroundColor: colors.WHITE
   },
   
-  header: {
-		borderBottom: `1px solid ${colors.BLACK}`,
-		display: 'flex',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
-  },
-
   h1: {
-		fontSize: '36px'
+    fontSize: '36px',
+    borderBottom: `1px solid ${colors.BLACK}`,
 	},
   
   textclass: {
