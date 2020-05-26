@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,13 +10,26 @@ import TextField from '@material-ui/core/TextField';
 import { FormControl } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
+import { AppContext } from '../../contexts/AppContext';
 
 const Login = ({classes}) => {
-  document.title = "¿Quiénes Somos? | MexiCOVID";
+  const { login, error } = React.useContext(AppContext)
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  
+  let onChangeUsername = (e) => {
+    setUsername(e.target.value);
+  }
+
+  let onChangePassword = (e) => {
+    setPassword(e.target.value);
+  }
+  
   return (
     <div>
     <Helmet>
-          <title>Login| MexiCOVID</title>
+      <title>Login| MexiCOVID</title>
     </Helmet>
       <div className={classes.container}>
         <Header fixed={true}/>
@@ -25,7 +38,7 @@ const Login = ({classes}) => {
           <FormControl fullWidth>
               <TextField
               id="outlined-full-width"
-              label="Correo Electronico"
+              label="Correo Electrónico"
               placeholder="ejemplo@itesm.mx"
               fullWidth
               type="email"
@@ -34,11 +47,12 @@ const Login = ({classes}) => {
                   shrink: true,
               }}
               variant="outlined"
+              onChange={onChangeUsername}
+              value={username}
               />
               <TextField
               id="outlined-full-width"
               label="Contraseña"
-              placeholder="Placeholder"
               helperText="8 caracteres"
               fullWidth
               margin="normal"
@@ -49,10 +63,13 @@ const Login = ({classes}) => {
                   shrink: true,
               }}
               variant="outlined"
+              onChange={onChangePassword}
+              value={password}
               />
           </FormControl>
-          <Grid container item xs direction="row"  justify="space-around"  alignItems="right">
-              <Button className={classes.button}>Iniciar</Button>
+          <Grid container item xs direction="column"  alignItems="flex-end">
+            <Button variant='outlined' size='large' onClick={() => login(username, password)} className={classes.button}>Iniciar</Button>
+            {error && <Typography className={classes.error} variant={'p'}>{error.message}</Typography>}
           </Grid>
         </div>
         <Footer/>
@@ -69,9 +86,10 @@ const styles = () => ({
     backgroundColor: colors.GRAY,
 	},
   
-    button: {
+  error: {
+    color: colors.RED
+  },
 
-    },
   container: {
     width: '100%',
     backgroundColor: colors.GRAY,

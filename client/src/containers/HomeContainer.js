@@ -89,21 +89,21 @@ const useHome = () => {
   }, [rowsTable, selectedLabel]);
 
   let callStatesConfirm = ()  => {
-    axios.post(`${process.env.REACT_APP_API_URL}/map/data/confirmados`, {})
+    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/data/confirmados`, {})
     .then(res => {
       setStatesConfirm(res.data);
     });
   }
 
   let callStatesDeads = ()  => {
-    axios.post(`${process.env.REACT_APP_API_URL}/map/data/decesos`, {})
+    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/data/decesos`, {})
     .then(res => {
       setStatesDeads(res.data);
     });
   }
 
   let callStatesData = ()  => {
-    axios.get(`${process.env.REACT_APP_API_URL}/estado/todos`, {})
+    axios.get(`${process.env.REACT_APP_MEXICOVID_API_URL}/estado/todos`, {})
     .then(res => {
       setStateData(res.data);
 
@@ -113,7 +113,7 @@ const useHome = () => {
   let callMunData = (cve_ent)  => {
     console.log(munDataArr, cve_ent);
     if(!(cve_ent in munDataArr)) {
-      axios.get(`${process.env.REACT_APP_API_URL}/municipio/${cve_ent}`, {})
+      axios.get(`${process.env.REACT_APP_MEXICOVID_API_URL}/municipio/${cve_ent}`, {})
       .then(res => {
         setMunData(res.data);
         let _munObj = munDataArr;

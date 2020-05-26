@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Home from './components/Home';
 import Team from './components/Team';
 import Login from './components/Login';
@@ -9,6 +9,7 @@ import User from "./components/User";
 import Regions from "./components/Regions";
 import AdminPanel from "./components/Admin";
 
+import { AppContext } from './contexts/AppContext';
 import { RegionContextProvider } from './contexts/RegionContext';
 import { HomeContextProvider } from './contexts/HomeContext';
 import { MapContextProvider } from './contexts/MapContext';
@@ -40,6 +41,9 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
+  const { token } = React.useContext(AppContext);
+  let loggedIn = token !== null;
+  
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -54,7 +58,7 @@ const App = () => {
                     </MapContextProvider>
                 </HomeContextProvider>
             </Route>
-            <Route path='/regions' >
+            <Route path='/regions'>      
               <RegionContextProvider>
                 <Regions/>
               </RegionContextProvider>
@@ -65,9 +69,9 @@ const App = () => {
             <Route path='/confirmage' component={ConfirmAge}/>
             <Route path='/municipalitiesfollow' component={MunicipalitiesFollow}/>
             <Route path='/distributionestate' component={DistributionEstate}/>
-            <Route path='/login' component={Login}/>
-            <Route path='/perfil' component={User}/>
-            <Route path='/adminPanel' component={AdminPanel}/>
+            {loggedIn ? <Redirect from='/login' to="/perfil" /> : <Route path='/login' component={Login}/>}
+            {!loggedIn ? <Redirect from='/perfil' to="/login" /> : <Route path='/perfil' component={User}/>}
+            {!loggedIn ? <Redirect from='/adminPanel' to="/login" /> : <Route path='/adminPanel' component={AdminPanel}/>}
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </BrowserRouter>

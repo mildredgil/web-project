@@ -5,9 +5,26 @@ const personasSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     password: {
         type: String,
-        require: true
+        required: true
+    },
+    rol: {
+        type: Number,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
     }
 });
 

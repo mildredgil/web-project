@@ -69,7 +69,7 @@ const useRegion = () => {
 	};
   
   let callDataChart = ()  => {
-    axios.post(`${process.env.REACT_APP_API_URL}/region/data/states`, {})
+    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/region/data/states`, {})
     .then(res => {
       setDataChart(res.data);
     });

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var municipio = require('../controller/municipio');
+
 
 router.post('/states', function(req, res) {
 	var fs = require('fs');
@@ -80,60 +80,6 @@ router.post('/data/confirmados', function(req, res) {
 	});
 	return res;
 	
-});
-
-router.post('/data/decesos', function(req, res) {
-	var fs = require('fs');
-	var d3 = require('d3');
-	var decesos;
-	var myjson = [];
-	
-	fs.readFile("data/home/decesos.csv", "utf8", function(err, data){
-		console.log("Getting suspicious data");
-
-		if(err) {
-			throw err;
-		}
-		
-		decesos = d3.csvParse(data.trim());
-		
-		for(var i = 0; i < decesos.length; i++) {
-			var id = decesos[i]["ID"];
-			var estado = decesos[i].ESTADO;
-			
-			delete decesos[i]["ID"];
-			delete decesos[i].ESTADO;
-			var data = {
-				"id": id,
-				"estado": estado,
-				"decesos": decesos[i]
-			}
-			
-			myjson.push(data);
-		}
-		
-		res.status(200).json(myjson);
-	});
-	return res;
-	
-});
-
-
-router.get('/municipios_data', function(req, res) {
-	var fs = require('fs');
-
-	fs.readFile("data/region/municipios_poblacion_entmun.csv", "utf8", function(err, data){
-		if(err) {
-			res.statusMessage = "file didn't load."
-			res.status(404).end();
-		} else {
-			// let jsonData = JSON.parse(data);
-			
-			res.status(200).json(data);
-		}
-	});
-	
-	return res;
 });
 
 

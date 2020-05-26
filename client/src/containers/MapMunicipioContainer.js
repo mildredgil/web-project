@@ -126,7 +126,7 @@ const useMapMunicipio = () => {
       }, [state, selectedLabel, munGEOJSON]);
 
     let callMunGEOJSON = (cve_ent)  => {
-        axios.get(`${process.env.REACT_APP_API_URL}/map/municipality/find/CVE_ENT?cve_ent=${cve_ent}`, {})
+        axios.get(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/municipality/find/CVE_ENT?cve_ent=${cve_ent}`, {})
         .then(res => {
             setMunGEOJSON(res.data);
         });

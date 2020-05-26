@@ -1,17 +1,24 @@
-const { masterKey } = require('./../config');
+const { secretToken } = require('../config');
+const jsonwebtoken = require( 'jsonwebtoken' );
 
-function validateAPIKEY(req, res, next) {
-	if(!req.headers.authorization) {
+function validateToken(req, res, next) {
+    let token = req.headers.sessiontoken;    
+    
+    if(!token) {
 		res.statusMessage = "Unauthorizated request. Send the API KEY"
 		return res.status(401).end();
 	}
-	console.log(masterKey)
-	if(req.headers.authorization !== `Bearer ${masterKey}`) {
-		res.statusMessage = "Unauthorizated request. Invalid API KEY"
-		return res.status(401).end();
-	}	
-	
-	next();
+    
+    jsonwebtoken.verify(token, secretToken, (err, decoded) =>{
+        if(err) {
+            res.statusMessage = "La sesión ha finalizado. Inicia sesión para continuar.";
+		    return res.status(401).end();	    
+        }
+
+        if(decoded) {
+            next();
+        }
+    })
 }
 
-module.exports = validateAPIKEY;
+module.exports = validateToken;

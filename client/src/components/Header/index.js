@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { AppContext } from '../../contexts/AppContext';
 
 const LinkElement = (props) => {
   const {classes, element, url} = props;
@@ -22,7 +23,9 @@ const LinkElement = (props) => {
 }
 
 const Header = ({ classes, fixed=false}) => {
+  const { token, logout } = React.useContext(AppContext);
   classes = useStyles();
+  let isLoggin = token !== null;
   let location = window.location.pathname;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -68,9 +71,9 @@ const Header = ({ classes, fixed=false}) => {
           <LinkElement url='/' element={
             <MenuItem><Typography variant="span" className={classes.title}>Inicio</Typography></MenuItem>
           }/>
-          <LinkElement url='/perfil' element={
+          {isLoggin && <LinkElement url='/perfil' element={
             <MenuItem><Typography variant="span" className={classes.title}>Mi Perfil</Typography></MenuItem>
-          }/>
+          }/>}
           <LinkElement url='/regions' element={
             <MenuItem><Typography variant="span" className={classes.title}>Seguimiento por Región</Typography></MenuItem>
           }/>
@@ -88,9 +91,9 @@ const Header = ({ classes, fixed=false}) => {
           <LinkElement url='/' element={
             <Button className={location === '/' ? classes.selectedBtn : classes.button} color="inherit">Inicio</Button>
           }/>
-          <LinkElement url='/perfil' element={
+          {isLoggin && <LinkElement url='/perfil' element={
             <Button className={location === '/perfil' ? classes.selectedBtn : classes.button} color="inherit">Mi Perfil</Button>
-          }/>          
+          }/>}
           <LinkElement url='/regions' element={
             <Button className={location === '/regions' ? classes.selectedBtn : classes.button} color="inherit">Seguimiento por Regiones</Button>
           }/>
@@ -100,9 +103,11 @@ const Header = ({ classes, fixed=false}) => {
           <LinkElement url='/about-us' element={
             <Button className={location === '/about-us' ? classes.selectedBtn : classes.button} color="inherit">Nosotros</Button>
           }/>   
-          <LinkElement url='/login' element={
+          {isLoggin ?
+            <Button onClick={logout} className={location === '/login' ? classes.selectedBtn : classes.button} color="inherit">Logout</Button>
+          : <LinkElement url='/login' element={
             <Button className={location === '/login' ? classes.selectedBtn : classes.button} color="inherit">Login</Button>
-          }/>          
+          }/>}
         </div>
       </Toolbar>
     </AppBar>

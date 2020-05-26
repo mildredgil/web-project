@@ -118,7 +118,7 @@ const useMap = () => {
   }, [stateSelected])
 
   let callStatesGEOJSON = ()  => {
-    axios.post(`${process.env.REACT_APP_API_URL}/map/states`, {})
+    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/states`, {})
     .then(res => {
       setStatesGeOJSON(res.data);
     });

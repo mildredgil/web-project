@@ -8,6 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Usuarios from './usuarios';
+import Files from './files';
 import * as colors from '../../constants/colors';
 
 function TabPanel(props) {
@@ -95,7 +96,7 @@ const PanelTabs = () => {
           <Usuarios/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <Files/>
         </TabPanel>
       </SwipeableViews>
     </div>
