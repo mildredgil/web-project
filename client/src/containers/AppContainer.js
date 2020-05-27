@@ -1,43 +1,50 @@
 import React from 'react';
-import axios from 'axios';
+import { axiosDefault } from "../Utils/axiosApi";
 
 const useApp = () => {
     const [token, setToken] = React.useState(null);
     const [username, setUsername] = React.useState(null);
+    const [rol, setRol] = React.useState(null);
     const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
         let token = localStorage.getItem("token");
         let username = localStorage.getItem("username");
+        let rol = localStorage.getItem("rol");
         
         if( localStorage.getItem("token") ) {
-            setToken(localStorage.getItem("token"));
+          setToken(localStorage.getItem("token"));
         }
 
         if( localStorage.getItem("username") ) {
-            setUsername(localStorage.getItem("username"));
+          setUsername(localStorage.getItem("username"));
+        }
+
+        if( localStorage.getItem("rol") ) {
+          setRol(localStorage.getItem("rol"));
         }
     }, [])
 
     let login = (username, password)  => {
-        axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.REACT_APP_API_KEY}`;
-        axios.post(`/user/login`, {
+        axiosDefault.post(`/user/login`, {
           username,
           password
         })
         .then( (response) => {
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("username", response.data.username);
-            setToken(response.data.token);
-            setUsername(response.data.username);
-            setError(null);
+          setToken(response.data.token);
+          setUsername(response.data.username);
+          setRol(response.data.rol);
+          setError(null);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("rol", response.data.rol);
+          localStorage.setItem("username", response.data.username);
         }).catch((err) => {
           setError({message: err.response.statusText});
         });
       }
     
       let logout = () => {
+        localStorage.removeItem("token");
         setToken(null);
         setUsername(null);
       }
@@ -46,6 +53,7 @@ const useApp = () => {
       username,
       token,
       error,
+      rol,
       login, 
       logout
     }

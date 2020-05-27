@@ -42,7 +42,7 @@ const styles = () => ({
   },
 
   panelContainer: {
-    width: '70%',
+    width: '85%',
 		margin: 'auto',
 		padding: '25px',
     paddingTop: '128px',

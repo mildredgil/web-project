@@ -41,9 +41,10 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
-  const { token } = React.useContext(AppContext);
+  const { rol,token } = React.useContext(AppContext);
   let loggedIn = token !== null;
-  
+  let isAdmin = rol !== null && rol == "0";
+
   return (
     <div>
       <ThemeProvider theme={theme}>
@@ -69,9 +70,23 @@ const App = () => {
             <Route path='/confirmage' component={ConfirmAge}/>
             <Route path='/municipalitiesfollow' component={MunicipalitiesFollow}/>
             <Route path='/distributionestate' component={DistributionEstate}/>
-            {loggedIn ? <Redirect from='/login' to="/perfil" /> : <Route path='/login' component={Login}/>}
-            {!loggedIn ? <Redirect from='/perfil' to="/login" /> : <Route path='/perfil' component={User}/>}
-            {!loggedIn ? <Redirect from='/adminPanel' to="/login" /> : <Route path='/adminPanel' component={AdminPanel}/>}
+            <Route path='/login'>
+              {loggedIn ? 
+                <React.Fragment>
+                  {isAdmin ? <Redirect to="/adminPanel" /> :<Redirect from='/login' to="/perfil" />}
+                </React.Fragment>
+               : <Login/>}
+            </Route>
+            <Route path='/perfil'>
+              {loggedIn ? <User/> : <Redirect to="/login" />}
+            </Route>
+            <Route path='/adminPanel'>
+              {loggedIn ? 
+                <React.Fragment>
+                  {isAdmin ? <AdminPanel /> :<Redirect to="/perfil" />}
+                </React.Fragment>
+               : <Redirect to="/login" />}
+            </Route>
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </BrowserRouter>

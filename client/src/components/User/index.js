@@ -11,9 +11,50 @@ import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import VisibilityRoundedIcon from '@material-ui/icons/VisibilityRounded';
 import Edit from './edit';
 import Content from './content';
+import { AppContext } from "../../contexts/AppContext";
+import { axiosUsers } from '../../Utils/axiosApi';
 
 const User = ({classes}) => {
-  const [isEdit, setIsEdit] = React.useState(false)
+  const { username, logout } = React.useContext(AppContext);
+  const [ userData, setUserData ] = React.useState(null);
+  const [ error, setError ] = React.useState(null);
+  const [isEdit, setIsEdit] = React.useState(false);
+  const [isEditing, setIsEditing] = React.useState(false);
+
+  React.useEffect(() => {
+    if ( username)
+      userInfo();
+  }, [username]);
+  
+  let userInfo = () => {
+    axiosUsers.post(`/user/find`, {
+      username
+    })
+    .then( (response) => {
+      setUserData(response.data)
+      setError(null)
+    }).catch((err) => {
+      setUserData(null);
+      setError({message: err.response.statusText})
+    });
+  }
+
+  let update = (data) => {
+    console.log(data)
+    setIsEditing(true)
+    axiosUsers.put(`/user/update`, {
+      query: {username},
+      data: data
+    })
+    .then( (response) => {
+      setUserData(response.data)
+      setError(null)
+      setIsEditing(false)
+    }).catch((err) => {
+      setIsEditing(false)
+      setError({message: err.response.statusText})
+    });
+  }
 
   let onChange = () => {
     setIsEdit(!isEdit)
@@ -35,9 +76,9 @@ const User = ({classes}) => {
 							</Button>
           </header>
           {!isEdit ?
-            <Content/>
+            <Content userData={userData} error={error}/>
           : 
-            <Edit/>}
+            <Edit userData={userData} update={update} isEditing={isEditing} error={error}/>}
         </div>
         <Footer/>
       </div>

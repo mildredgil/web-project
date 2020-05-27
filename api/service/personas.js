@@ -24,6 +24,15 @@
     }
 
     /**
+     * Funtion to find the person from collections.
+     * @param {*} query condition or expression to find the person from collection.
+     * @param {*} callback callback function
+     */
+    exports.findPersonas = function (query, callback) {
+        persona.find(query, callback).select('-password');
+    }
+
+    /**
      * Function to execute the update query by user ID
      * @param {*} id person id
      * @param {*} data person data which we need to update.

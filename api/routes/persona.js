@@ -21,7 +21,7 @@ router.post('/login', persona.login);
 /**
  * TO get the single persona by their username eg.email
  */
-router.get('/find', validateToken, persona.find);
+router.post('/find', validateToken, persona.find);
 
 /**
  * TO get the single persona by their username eg.email

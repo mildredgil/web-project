@@ -37,7 +37,7 @@ exports.login = function (req, res) {
     var body = req.body;
 
     if (!body.username || !body.password) {
-        res.statusMessage = "El usuario o contraseña esta vacío.";
+        res.statusMessage = "El campo de usuario o de contraseña esta vacío.";
         return res.status(406).end();
     }
 
@@ -55,12 +55,14 @@ exports.login = function (req, res) {
                         username: response.username
                     };
                     
-                    jsonwebtoken.sign(userData, secretToken, (err, token) => {
+                    jsonwebtoken.sign(userData, secretToken, { expiresIn : '10m' }, (err, token) => {
                         if(err) {
                             res.statusMessage = error.message;
                             return res.status(400).end();
                         } else {
-                            return res.status(200).json({...userData, token});
+                            let data = new PersonData(response);
+                            console.log(response.rol)
+                            return res.status(200).json({...data, token});
                         }
                     });
                 } else {
@@ -83,22 +85,24 @@ exports.login = function (req, res) {
  * Function to find user from user collection.
  */
 exports.find = function (req, res) {
-    var params = req.params || {};
+    var body = req.body || {};
     var query = {
-        username: params.username
+        username: body.username
     };
-    if (!query) {
+    if (!query && !body.username) {
         res.status(400).send('Bad Request');
         return;
     }
+    
     personService.findPersona(query, function (error, response) {
         if (error) {
             res.status(404).send(error);
             return;
         }
         if (response) {
-            res.status(200).send(response);
-            return;
+            let userData = new PersonData(response);
+            return res.status(200).send(userData);
+            
         }
         if (!response) {
             res.status(204).send('No Data Found');
@@ -111,7 +115,7 @@ exports.find = function (req, res) {
  */
 exports.all = function (req, res) {
     
-    personService.findPersona({}, function (error, response) {
+    personService.findPersonas({}, function (error, response) {
         if (error) {
             res.status(404).send(error);
             return;
@@ -153,7 +157,8 @@ exports.update = function (req, res) {
     var body = req.body;
     var query = body.query;
     var data = body.data;
-    var options = body.options
+    var options = body.options;
+
     if (!query) {
         res.status(400).send('Bad request');
         return;
@@ -161,7 +166,24 @@ exports.update = function (req, res) {
 
     personService.updatePersona(query, data, options, (err, response) => {
         if (response) {
-            res.status(200).send(response);
+            if(response.username) {
+                personService.findPersona({username: response.username}, function (error, response) {
+                    if (error) {
+                        res.status(404).send(error);
+                        return;
+                    }
+                    if (response) {
+                        let userData = new PersonData(response);
+                        res.status(200).send(userData);
+                        return;
+                    }
+                    if (!response) {
+                        res.status(204).send('No Data Found');
+                    }
+                });
+            } else {
+                res.status(200).send(response);
+            }
         } else if (err) {
             res.status(400).send(err);
         }
@@ -202,6 +224,16 @@ class Person {
         this.nombre = personData.nombre || '';
         this.password = personData.password || '';
         this.rol = personData.rol || 1;
+        this.image = personData.image || '/img/default.png';
+        this.description = personData.description || 'Colaborador de MEXICOVID19 @ ITESM.';
+    }
+}
+
+class PersonData {
+    constructor(personData) {
+        this.username = personData.username || '';
+        this.nombre = personData.nombre || '';
+        this.rol = String(personData.rol) || 1;
         this.image = personData.image || '/img/default.png';
         this.description = personData.description || 'Colaborador de MEXICOVID19 @ ITESM.';
     }

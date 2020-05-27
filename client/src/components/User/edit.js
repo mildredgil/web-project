@@ -2,9 +2,33 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import * as colors from '../../constants/colors';
 import TextField from '@material-ui/core/TextField';
-import { FormControl,FormControlLabel  } from '@material-ui/core';
+import { Button, FormControl,FormControlLabel  } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const Edit = ({classes}) => {
+const Edit = ( props ) => {
+  const { classes, userData, update, isEditing, error } = props;
+  const [ nombre, setNombre ] = React.useState(null);
+  const [ description, setDescription ] = React.useState(null);
+  
+  React.useEffect(() => {
+    if ( userData ) {
+      setNombre(userData.nombre);
+      setDescription(userData.description);
+    }
+  }, [userData])
+
+  let onChangeData = (e, field) => {
+    if ( field == "nombre" ) {
+      setNombre(e.target.value)
+    } else {
+      setDescription(e.target.value)
+    }
+  }
+
+  if ( !userData )
+      return null;
+
   return (
     <div>
       <div className={classes.container}>
@@ -22,6 +46,8 @@ const Edit = ({classes}) => {
                             shrink: true,
                         }}
                         variant="outlined"
+                        value={nombre}
+                        onChange={(e) => onChangeData(e, "nombre")}
                         />
                         <TextField
                         id="area"
@@ -35,15 +61,33 @@ const Edit = ({classes}) => {
                             shrink: true,
                         }}
                         variant="outlined"
+                        value={userData.rol == 1 ? "Investigación" : "Equipo Interdisciplinario"}
+                        />
+                        <TextField
+                        id="correo"
+                        label="correo"
+                        style={{ margin: 8 }}
+                        fullWidth
+                        disabled
+                        type="text"
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        variant="outlined"
+                        value={userData.username}
                         />
                         <FormControlLabel
                             classes={{labelPlacementTop: classes.textareaContainer}}
                             control={
-                                <textarea className={classes.textarea} value={"Lorem Ipsum"} onChange={null} />
+                                <textarea className={classes.textarea} onChange={(e) => onChangeData(e, "description")} value={description} />
                             }
                             label="Descripción:"
                             labelPlacement="top"
                         />
+                        <Button onClick={() => update({nombre, description})} variant="text" size='large' className={classes.button} type="submit" startIcon={isEditing ? <CircularProgress size={25} /> : <SaveIcon/>}>
+                          Guardar
+                        </Button>
                     </FormControl>
                 </section>   
             </div>
@@ -63,6 +107,11 @@ const styles = () => ({
   container: {
     width: '100%',
     backgroundColor: colors.GRAY,
+  },
+
+  button: {
+    width: "fit-content",
+    marginLeft: 'auto'
   },
   
   textclass: {
