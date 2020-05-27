@@ -5,6 +5,7 @@ export const BROWN_LIGHTER = '#FFE0BB';
 export const BLUE = '#2070b4';
 export const BLUE_DARK = '#445666';
 export const BLUE_LIGHT = '#95B6C5';
+export const BLUE_LIGHTER = '#eeeeee';
 export const RED = '#cb181d';
 export const WHITE = '#fafafa';
 export const GRAY = '#95a6a552';

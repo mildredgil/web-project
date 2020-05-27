@@ -26,28 +26,25 @@ const useApp = () => {
     }, [])
 
     let login = (username, password)  => {
-        axiosDefault.post(`/user/login`, {
-          username,
-          password
-        })
-        .then( (response) => {
-          setToken(response.data.token);
-          setUsername(response.data.username);
-          setRol(response.data.rol);
-          setError(null);
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("rol", response.data.rol);
-          localStorage.setItem("username", response.data.username);
-        }).catch((err) => {
-          setError({message: err.response.statusText});
-        });
-      }
-    
-      let logout = () => {
-        localStorage.removeItem("token");
-        setToken(null);
-        setUsername(null);
-      }
+      axiosDefault.post(`/user/login`, {
+        username,
+        password
+      })
+      .then( (response) => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("rol", response.data.rol);
+        localStorage.setItem("username", response.data.username);
+        window.location.replace("/login");
+      }).catch((err) => {
+        setError({message: err.response.statusText});
+      });
+    }
+  
+    let logout = () => {
+      localStorage.removeItem("token");
+      setToken(null);
+      setUsername(null);
+    }
 
     return {
       username,

@@ -15,18 +15,22 @@ import { AppContext } from "../../contexts/AppContext";
 import { axiosUsers } from '../../Utils/axiosApi';
 
 const User = ({classes}) => {
-  const { username, logout } = React.useContext(AppContext);
+  const { username, token, logout } = React.useContext(AppContext);
   const [ userData, setUserData ] = React.useState(null);
   const [ error, setError ] = React.useState(null);
   const [isEdit, setIsEdit] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
 
   React.useEffect(() => {
-    if ( username)
+    if ( username && token) {
+      console.log("userInfo call")
       userInfo();
+    }
+      
   }, [username]);
   
   let userInfo = () => {
+    console.log(axiosUsers)
     axiosUsers.post(`/user/find`, {
       username
     })

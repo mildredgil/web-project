@@ -24,6 +24,9 @@ const PhotoGrid = (props) => {
                         <p className="names" align={'center'}>{user.nombre}</p>
                         <img src={user.image} className="img-responsive" alt="Image"/>
                         <p>{user.description}</p>
+                        <Grid alignContent="center">
+                            <a href={`mailto:${user.username}`} target="_blank" className={classes.contactText}><MailIcon className={classes.iconspace}/>{user.username}</a>
+                        </Grid>
                     </div>)
                 })}
             </Grid>

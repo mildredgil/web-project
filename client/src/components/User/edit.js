@@ -32,65 +32,65 @@ const Edit = ( props ) => {
   return (
     <div>
       <div className={classes.container}>
-            <div className="container text-justify">      
-                <section className={classes.section}>
-                    <FormControl fullWidth>
-                        <TextField
-                        id="nombre"
-                        label="Nombre"
-                        style={{ margin: 8 }}
-                        fullWidth
-                        type="text"
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        value={nombre}
-                        onChange={(e) => onChangeData(e, "nombre")}
-                        />
-                        <TextField
-                        id="area"
-                        label="Area"
-                        style={{ margin: 8 }}
-                        fullWidth
-                        disabled
-                        type="text"
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        value={userData.rol == 1 ? "Investigación" : "Equipo Interdisciplinario"}
-                        />
-                        <TextField
-                        id="correo"
-                        label="correo"
-                        style={{ margin: 8 }}
-                        fullWidth
-                        disabled
-                        type="text"
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        variant="outlined"
-                        value={userData.username}
-                        />
-                        <FormControlLabel
-                            classes={{labelPlacementTop: classes.textareaContainer}}
-                            control={
-                                <textarea className={classes.textarea} onChange={(e) => onChangeData(e, "description")} value={description} />
-                            }
-                            label="Descripción:"
-                            labelPlacement="top"
-                        />
-                        <Button onClick={() => update({nombre, description})} variant="text" size='large' className={classes.button} type="submit" startIcon={isEditing ? <CircularProgress size={25} /> : <SaveIcon/>}>
-                          Guardar
-                        </Button>
-                    </FormControl>
-                </section>   
-            </div>
+        <div className="container text-justify">      
+          <section className={classes.section}>
+            <FormControl fullWidth>
+              <TextField
+                id="nombre"
+                label="Nombre"
+                style={{ margin: 8, backgroundColor: colors.BLUE_LIGHTER }}
+                fullWidth
+                type="text"
+                margin="normal"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                variant="outlined"
+                value={nombre}
+                onChange={(e) => onChangeData(e, "nombre")}
+              />
+              <TextField
+              id="area"
+              label="Area"
+              style={{ margin: 8, backgroundColor: colors.BLUE_LIGHTER }}
+              fullWidth
+              disabled
+              type="text"
+              margin="normal"
+              InputLabelProps={{
+                  shrink: true,
+              }}
+              variant="outlined"
+              value={userData.rol == 1 ? "Investigación" : "Equipo Interdisciplinario"}
+              />
+              <TextField
+              id="correo"
+              label="correo"
+              style={{ margin: 8, backgroundColor: colors.BLUE_LIGHTER }}
+              fullWidth
+              disabled
+              type="text"
+              margin="normal"
+              InputLabelProps={{
+                  shrink: true,
+              }}
+              variant="outlined"
+              value={userData.username}
+              />
+              <FormControlLabel
+                  classes={{labelPlacementTop: classes.textareaContainer}}
+                  control={
+                      <textarea className={classes.textarea} onChange={(e) => onChangeData(e, "description")} value={description} />
+                  }
+                  label="Descripción:"
+                  labelPlacement="top"
+              />
+              <Button onClick={() => update({nombre, description})} variant="text" size='large' className={classes.button} type="submit" startIcon={isEditing ? <CircularProgress size={25} /> : <SaveIcon/>}>
+                Guardar
+              </Button>
+            </FormControl>
+          </section>   
+        </div>
       </div>
     </div>
     );
@@ -123,7 +123,8 @@ const styles = () => ({
     alignItems: 'flex-start',
     height: '205px',
     width: '100%',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    backgroundColor: colors.BLUE_LIGHTER
   },
 
   textareaContainer: {

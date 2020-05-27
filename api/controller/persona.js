@@ -121,8 +121,7 @@ exports.all = function (req, res) {
             return;
         }
         if (response) {
-            let userData = new PersonData(response)
-            res.status(200).send(user);
+            res.status(200).send(response);
             return;
         }
         if (!response) {
