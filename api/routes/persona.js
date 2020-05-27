@@ -24,9 +24,14 @@ router.post('/login', persona.login);
 router.post('/find', validateToken, persona.find);
 
 /**
- * TO get the single persona by their username eg.email
+ * TO get all users 
  */
 router.get('/all', validateToken, persona.all);
+
+/**
+ * TO get all users with rol gt 0
+ */
+router.get('/team', persona.team);
 
 /**
  * To update persona data(fields) by persona ID

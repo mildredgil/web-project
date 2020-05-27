@@ -111,7 +111,7 @@ exports.find = function (req, res) {
 }
 
 /**
- * Function to find user from user collection.
+ * Function to get all users from user collection.
  */
 exports.all = function (req, res) {
     
@@ -121,8 +121,43 @@ exports.all = function (req, res) {
             return;
         }
         if (response) {
-            res.status(200).send(response);
+            let userData = new PersonData(response)
+            res.status(200).send(user);
             return;
+        }
+        if (!response) {
+            res.status(204).send('No Data Found');
+        }
+    });
+}
+
+/**
+ * Function to get users from user collection.
+ */
+exports.team = function (req, res) {
+    
+    personService.findPersonas({rol: 1}, function (error, response) {
+        if (error) {
+            res.status(404).send(error);
+            return;
+        }
+        if (response) {
+            let investigadores = response;
+
+            personService.findPersonas({rol: 2}, function (error, response) {
+                if (error) {
+                    res.status(404).send(error);
+                    return;
+                }
+                if (response) {
+                    let equipo = response;
+        
+                    res.status(200).send({investigadores, equipo});
+                }
+                if (!response) {
+                    res.status(204).send('No Data Found');
+                }
+            });
         }
         if (!response) {
             res.status(204).send('No Data Found');

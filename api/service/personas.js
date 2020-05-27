@@ -29,7 +29,7 @@
      * @param {*} callback callback function
      */
     exports.findPersonas = function (query, callback) {
-        persona.find(query, callback).select('-password');
+        persona.find(query, callback).select('-password').sort({ 'rol': 1 });
     }
 
     /**

@@ -6,9 +6,30 @@ import Footer from '../Footer/';
 import * as colors from '../../constants/colors';
 import PhotoGrid from './teamPhotos';
 import { Helmet } from 'react-helmet';
+import { axiosDefault } from '../../Utils/axiosApi';
 
 const Team = ({classes}) => {
-  document.title = "¿Quiénes Somos? | MexiCOVID";
+  const [ investigadores, setInvestigadores ] = React.useState(null);
+  const [ equipo, setEquipo ] = React.useState(null);
+  const [ error, setError ] = React.useState(null);
+  
+  React.useEffect(() => {
+    usersInfo();
+  }, []);
+  
+  let usersInfo = () => {
+    axiosDefault.get(`/user/team`)
+    .then( (response) => {
+      setInvestigadores(response.data.investigadores)
+      setEquipo(response.data.equipo)
+      setError(null)
+    }).catch((err) => {
+      setInvestigadores(null)
+      setEquipo(null)
+      setError({message: err.response.statusText})
+    });
+  }
+
   return (
     <div>
       <Helmet>
@@ -43,7 +64,7 @@ const Team = ({classes}) => {
               </Typography>  
             </div>
             </section>
-            <PhotoGrid/>
+            <PhotoGrid equipo={equipo} investigadores={investigadores}/>
           </div>   
         </div>
         <Footer/>
