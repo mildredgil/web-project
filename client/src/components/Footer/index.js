@@ -16,7 +16,7 @@ const Footer = ({ classes}) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <div className={classes.columnsContainer}>
-          <Typography className={classes.title}>Menu</Typography>
+          <Typography className={classes.title}>Menú</Typography>
           <div className={classes.columns}>
             <Link to={url+'/'} className={classes.name}><Typography className={classes.rows}>Inicio</Typography></Link>
             <Link to={url+'/research'} onClick={click} className={classes.name}><Typography className={classes.rows}>Investigación</Typography></Link>
