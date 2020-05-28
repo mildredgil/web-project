@@ -91,7 +91,7 @@ const Header = ({ classes, fixed=false}) => {
             <MenuItem><Typography variant="span" className={classes.title}>Login</Typography></MenuItem>
           }/>
         </Menu>
-        <div className={classes.buttons}>
+        <div className={isLoggin ? classes.buttonsAdmin : classes.buttons}>
           <LinkElement url='/' element={
             <Button className={location === '/' ? classes.selectedBtn : classes.button} color="inherit">Inicio</Button>
           }/>
@@ -144,6 +144,12 @@ const useStyles = makeStyles((theme) => ({
     flex: '2'
   },
 
+  buttonsAdmin: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flex: '3'
+  },
+
   button: {
     '&:hover': {
       borderBottom: '1px solid',
@@ -168,6 +174,10 @@ const useStyles = makeStyles((theme) => ({
 
   [`@media (max-width: ${999}px)`]: {
     buttons: {
+      display: 'none'
+    },
+
+    buttonsAdmin: {
       display: 'none'
     },
 

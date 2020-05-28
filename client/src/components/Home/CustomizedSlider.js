@@ -38,13 +38,27 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
 
+  textDate: {
+    display: 'flex',
+    margin: '0px 10px',
+    letterSpacing: '2px',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   dotConfirm: {
     color: colors.BLUE_LIGHT
   },
 
   dotDeads: {
     color: colors.RED
-  }
+  },
+
+  [`@media (max-width: ${1200}px)`]: {
+    textDate:{
+        display: 'none',
+    }		
+},
   
 }));
 
@@ -72,7 +86,7 @@ const CustomizedSlider = () => {
     <div className={classes.container} >
       <Slider/>
       <div className={classes.textContainer}>
-        <Typography className={classes.text}>{formatedDate} | Totales:</Typography>
+        <Typography className={classes.textDate}>{formatedDate} | Totales:</Typography>
         <Typography className={classes.text}><FiberManualRecordTwoToneIcon className={classes.dotConfirm}/>{numberWithCommas(totalDeads)}</Typography>
         <Typography className={classes.text}><FiberManualRecordTwoToneIcon className={classes.dotDeads}/>{numberWithCommas(totalConfirm)}</Typography>
       </div>
