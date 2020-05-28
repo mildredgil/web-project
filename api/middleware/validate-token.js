@@ -5,7 +5,7 @@ function validateToken(req, res, next) {
     let token = req.headers.sessiontoken;    
     
     if(!token) {
-		res.statusMessage = "Unauthorizated request. Loggin"
+		res.statusMessage = "Unauthorizated request. Login"
 		return res.status(401).end();
 	}
     

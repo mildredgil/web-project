@@ -162,16 +162,16 @@ const Files = ({classes}) => {
         }}
         editable={{
           onRowAdd: (newData) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
+            axiosUsers.post(`/region/add/csv/${formatDate(newData.date)}`, newData)
+              .then( (response) => {
                 setState((prevState) => {
                   const data = [...prevState.data];
-                  data.push(newData);
+                  data.push(response.data);
                   return { ...prevState, data };
                 });
-              }, 600);
-            }),
+              }).catch((err) => {
+                return null;
+              }),
           onRowUpdate: (newData, oldData) =>
             axiosUsers.put(`/region/update/csv/${formatDate(newData.date)}`, {
               data: {
@@ -191,16 +191,16 @@ const Files = ({classes}) => {
               return null;
             }),
           onRowDelete: (oldData) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-                setState((prevState) => {
-                  const data = [...prevState.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  return { ...prevState, data };
-                });
-              }, 600);
-            }),
+          axiosUsers.delete(`/region/delete/csv/${formatDate(oldData.date)}`)
+          .then( (response) => {
+            setState((prevState) => {
+              const data = [...prevState.data];
+              data.splice(data.indexOf(oldData), 1);
+              return { ...prevState, data };
+            });
+          }).catch((err) => {
+            return null;
+          }),
         }}
       />
       <div className={classes.uploadContainer}> 
