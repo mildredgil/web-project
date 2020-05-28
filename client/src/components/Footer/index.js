@@ -11,9 +11,9 @@ const Footer = ({ classes}) => {
   let click = () => {
     window.scrollTo({ behavior: 'smooth', top: -60 })
   }
-    
+  let location = window.location.pathname;
   return (
-    <div className={classes.root}>
+    <div className={location === '/regions' ? classes.rootr : classes.root}>
       <div className={classes.content}>
         <div className={classes.columnsContainer}>
           <Typography className={classes.title}>Menú</Typography>
@@ -52,6 +52,15 @@ const useStyles = makeStyles((theme) => ({
     height: 'fit-content',
     display: 'flex',
     marginTop: '50px',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+
+  rootr: {
+    borderTop: `10px ridge ${colors.WHITE}`,
+    backgroundColor: '#222222',
+    height: 'fit-content',
+    display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
   },
