@@ -12,6 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import { AppContext } from '../../contexts/AppContext';
 
+function emailIsValid (email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
 const Login = ({classes}) => {
   const { login, error } = React.useContext(AppContext)
   const [username, setUsername] = React.useState("");
@@ -24,7 +28,6 @@ const Login = ({classes}) => {
   let onChangePassword = (e) => {
     setPassword(e.target.value);
   }
-  
   return (
     <div>
     <Helmet>
@@ -48,6 +51,7 @@ const Login = ({classes}) => {
               variant="outlined"
               onChange={onChangeUsername}
               value={username}
+              error =  {!emailIsValid(username)}             
               />
               <TextField
               id="outlined-full-width"
@@ -57,17 +61,20 @@ const Login = ({classes}) => {
               margin="normal"
               type="password"
               required
-              minlength="8"
-              InputLabelProps={{
-                  shrink: true,
+              InputLabelProps = {{
+                  shrink: true 
+              }}
+              inputProps = {{
+                minlength: "8"
               }}
               variant="outlined"
               onChange={onChangePassword}
               value={password}
+              error = {password.length < 8}
               />
           </FormControl>
           <Grid container item xs direction="column"  alignItems="flex-end">
-            <Button variant='outlined' size='large' onClick={() => login(username, password)} className={classes.button}>Iniciar</Button>
+            <Button variant='outlined' size='large' onClick={() => login(username, password)} className={classes.button} disabled={password.length < 8 || !emailIsValid(username)}> Iniciar</Button>
             {error && <Typography className={classes.error} variant={'p'}>{error.message}</Typography>}
           </Grid>
         </div>
