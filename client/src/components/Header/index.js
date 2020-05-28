@@ -23,9 +23,10 @@ const LinkElement = (props) => {
 }
 
 const Header = ({ classes, fixed=false}) => {
-  const { token, logout } = React.useContext(AppContext);
+  const { token, logout, rol } = React.useContext(AppContext);
   classes = useStyles();
   let isLoggin = token !== null;
+  let isAdmin = rol !== null && rol == "0";
   let location = window.location.pathname;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,6 +72,9 @@ const Header = ({ classes, fixed=false}) => {
           <LinkElement url='/' element={
             <MenuItem><Typography variant="span" className={classes.title}>Inicio</Typography></MenuItem>
           }/>
+          {isLoggin && isAdmin && <LinkElement url='/adminPanel' element={
+            <MenuItem><Typography variant="span" className={classes.title}>Panel</Typography></MenuItem>
+          }/>}
           {isLoggin && <LinkElement url='/perfil' element={
             <MenuItem><Typography variant="span" className={classes.title}>Mi Perfil</Typography></MenuItem>
           }/>}
@@ -91,6 +95,9 @@ const Header = ({ classes, fixed=false}) => {
           <LinkElement url='/' element={
             <Button className={location === '/' ? classes.selectedBtn : classes.button} color="inherit">Inicio</Button>
           }/>
+          {isLoggin && isAdmin && <LinkElement url='/adminPanel' element={
+            <Button className={location === '/adminPanel' ? classes.selectedBtn : classes.button} color="inherit">Panel</Button>
+          }/>}
           {isLoggin && <LinkElement url='/perfil' element={
             <Button className={location === '/perfil' ? classes.selectedBtn : classes.button} color="inherit">Mi Perfil</Button>
           }/>}
