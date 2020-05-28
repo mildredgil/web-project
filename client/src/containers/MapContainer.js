@@ -1,10 +1,10 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
-import axios from 'axios';
 import { HomeContext } from '../contexts/HomeContext';
 import { MapMunicipioContext } from '../contexts/MapMunicipioContext';
 import * as colors from './../constants/colors';
 import { numberWithCommas } from '../Utils/numberWCommas';
+import { axiosDefault } from "../Utils/axiosApi";
 
 const useMap = () => {
   mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX_API_KEY;
@@ -118,7 +118,7 @@ const useMap = () => {
   }, [stateSelected])
 
   let callStatesGEOJSON = ()  => {
-    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/states`, {})
+    axiosDefault.post(`/map/states`, {})
     .then(res => {
       setStatesGeOJSON(res.data);
     });

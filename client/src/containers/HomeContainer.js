@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import { axiosDefault } from "../Utils/axiosApi";
 
 const useHome = () => {
   const [munDataArr, setMunDataArr] = React.useState({});
@@ -24,8 +24,6 @@ const useHome = () => {
   const [isMap, setIsMap] = React.useState(false);
   
   React.useEffect(() => {
-    callStatesConfirm();
-    callStatesDeads();
     callStatesData();
   }, []);
 
@@ -89,21 +87,21 @@ const useHome = () => {
   }, [rowsTable, selectedLabel]);
 
   let callStatesConfirm = ()  => {
-    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/data/confirmados`, {})
+    axiosDefault.post(`/map/data/confirmados`, {})
     .then(res => {
       setStatesConfirm(res.data);
     });
   }
 
   let callStatesDeads = ()  => {
-    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/data/decesos`, {})
+    axiosDefault.post(`/map/data/decesos`, {})
     .then(res => {
       setStatesDeads(res.data);
     });
   }
 
   let callStatesData = ()  => {
-    axios.get(`${process.env.REACT_APP_MEXICOVID_API_URL}/estado/todos`, {})
+    axiosDefault.get(`/estado/todos`, {})
     .then(res => {
       setStateData(res.data);
 
@@ -113,7 +111,7 @@ const useHome = () => {
   let callMunData = (cve_ent)  => {
     console.log(munDataArr, cve_ent);
     if(!(cve_ent in munDataArr)) {
-      axios.get(`${process.env.REACT_APP_MEXICOVID_API_URL}/municipio/${cve_ent}`, {})
+      axiosDefault.get(`/municipio/${cve_ent}`, {})
       .then(res => {
         setMunData(res.data);
         let _munObj = munDataArr;

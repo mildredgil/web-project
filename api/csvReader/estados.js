@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var estado = require('../controller/estado');
 
+//load states
 router.get('/estado', function(req, res) {
     var fs = require('fs');
     var d3 = require('d3');

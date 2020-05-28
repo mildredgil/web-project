@@ -6,11 +6,18 @@ var validateAPIKEY = require('./middleware/validate-api-key');
 
 //Models
 require('./models/persona');
+require('./models/municipios');
+require('./models/estados');
 
 //Routes
 var mapRouter = require('./routes/map');
 var regionRouter = require('./routes/region');
 var personaRouter = require('./routes/persona');
+var municipioRouter = require('./routes/municipio');
+var estadoRouter = require('./routes/estado');
+
+//load estados
+var csvEstadoRouter = require('./csvReader/estados');
 
 require('./connection');
 var app = express();
@@ -27,6 +34,12 @@ app.use( validateAPIKEY );
 app.use('/map', mapRouter);
 app.use('/region', regionRouter);
 app.use('/user', personaRouter);
+
+app.use('/municipio', municipioRouter);
+app.use('/estado', estadoRouter);
+
+app.use('/csv', csvEstadoRouter);
+
 
 // error handler
 app.use(function(err, req, res, next) {

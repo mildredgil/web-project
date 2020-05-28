@@ -60,10 +60,82 @@ exports.update = function (req, res) {
     var query = body.query;
     var data = body.data;
     var options = body.options;
-    if (!query) {
-        res.status(400).send('Bad request');
-        return;
-    }
+    
+    fs.readFile("data/mun/municipios_updated.csv", "utf8", async function(err, data) {
+		let mun = d3.csvParse(data);
+		let poblacion_csv = await fs.promises.readFile('data/mun/poblacion.csv', 'binary')
+		let poblacion = d3.csvParse( poblacion_csv ).map(l=>({ 
+			cve_ent_mun: l.Cve_Ent.toString().padStart(2, 0)+l.Cve_Mun.toString().padEnd(3, 0), 
+			poblacion: l.Pob_Total 
+		}))
+		let mun_grouped = mun.reduce((r, a)=>{
+			key = a.cve_ent_mun.padStart(5, 0);
+			r[key] = r[key] || [];
+			r[key].push(a);
+			return r;
+		}, Object.create(null))
+		let mun_arr = []
+		for (const municipio in mun_grouped) {
+			query = { cve_ent_mun: municipio }
+			let mun_indice_vulnerabilidad;
+			switch (mun_grouped[municipio][0].indice_vulnerabilidad) {
+				case "No Disponible":
+					mun_indice_vulnerabilidad = -1;
+					break;
+				case "sin vulnerabilidad": 
+					mun_indice_vulnerabilidad = 0;
+					break;
+				case "vulnerabilidad baja":
+					mun_indice_vulnerabilidad = 1;
+					break;
+				case "vulnerabilidad media":
+					mun_indice_vulnerabilidad = 2;
+					break;
+				case "vulnerabilidad alta":
+					mun_indice_vulnerabilidad = 3;
+					break;
+				case "vulnerabilidad muy alta":
+					mun_indice_vulnerabilidad = 4;
+					break;
+				default:
+					mun_indice_vulnerabilidad = -1;
+					break;
+			}
+			let mun_poblacion = poblacion.find(l=>l.cve_ent_mun == municipio).poblacion;
+			let mun_confirmados = mun_grouped[municipio].map(l=>({
+				date: dateToString(l.fecha),
+				count: l.confirmados
+			}))
+			let mun_decesos = mun_grouped[municipio].map(l=>({
+				date: dateToString(l.fecha),
+				count: l.decesos
+			}))
+			let mun_pruebas = mun_grouped[municipio].map(l=>({
+				date: dateToString(l.fecha),
+				count: l.decesos
+			}))
+			let mun_data = {
+				decesos: mun_decesos,
+				confirmados: mun_confirmados,
+				pruebas: mun_pruebas,
+				indice_vulnerabilidad: Number(mun_indice_vulnerabilidad),
+				poblacion: mun_poblacion
+			}
+			Municipios
+			.updateMunicipio(query, mun_data ) 
+			.then( result => {
+				if( !result ) {
+					return errorResponse(res, 404, `The municipality does not exist`);
+				}
+				console.log("RESULT", result)
+			})
+			.catch( _ => {
+				return errorResponse(res, 500, "Something is wrong with the Database. Try again later.");
+			})
+			mun_arr.push({cve_ent_mun: municipio, ...mun_data})
+		}
+		return res.status(200).json(mun_arr);
+	})
 
     municipioService.updateMunicipio(query, data, options, (err, response) => {
         if (response) {

@@ -1,11 +1,11 @@
 import React from 'react';
 import mapboxgl from 'mapbox-gl';
-import axios from 'axios';
 import { HomeContext } from '../contexts/HomeContext';
 import { MapContext } from '../contexts/MapContext';
 import * as colors from './../constants/colors';
 import { numberWithCommas } from '../Utils/numberWCommas';
 import  { FITBOUNDS } from '../constants/statesLimits';
+import { axiosDefault } from "../Utils/axiosApi";
 
 const useMapMunicipio = () => {
   mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX_API_KEY;
@@ -126,7 +126,7 @@ const useMapMunicipio = () => {
       }, [state, selectedLabel, munGEOJSON]);
 
     let callMunGEOJSON = (cve_ent)  => {
-        axios.get(`${process.env.REACT_APP_MEXICOVID_API_URL}/map/municipality/find/CVE_ENT?cve_ent=${cve_ent}`, {})
+        axiosDefault.get(`/map/municipality/find/CVE_ENT?cve_ent=${cve_ent}`, {})
         .then(res => {
             setMunGEOJSON(res.data);
         });
