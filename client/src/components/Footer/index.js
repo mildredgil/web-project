@@ -26,22 +26,18 @@ const Footer = ({ classes}) => {
           </div>
         </div>
         <div className={classes.columnsContainer}>
-          <Typography className={classes.title}>Investigación</Typography>
-          <div className={classes.columns}>
-            <Link to={url+'/research?cat=1'} onClick={click} className={classes.name}><Typography className={classes.rows}>Infraestructura Hospitalaria</Typography></Link>
-            <Link to={url+'/research?cat=2'} onClick={click} className={classes.name}><Typography className={classes.rows}>Economía</Typography></Link>
-            <Link to={url+'/research?cat=3'} onClick={click} className={classes.name}><Typography className={classes.rows}>Analisis de la base de pruebas</Typography></Link>
-            <Link to={url+'/research?cat=4'} onClick={click} className={classes.name}><Typography className={classes.rows}>Confirmados positivos en los Estado</Typography></Link>
-            <Link to={url+'/research?cat=5'} onClick={click} className={classes.name}><Typography className={classes.rows}>Información clínica de pacientes diagnosticados con covid-19 en México</Typography></Link>
-            <Link to={url+'/research?cat=6'} onClick={click} className={classes.name}><Typography className={classes.rows}>Geografía</Typography></Link>
-            <Link to={url+'/research?cat=7'} onClick={click} className={classes.name}><Typography className={classes.rows}>Comercio</Typography></Link>
-          </div>
-        </div>
-        <div className={classes.columnsContainer}>
           <Typography className={classes.title}>Seguimiento por Región</Typography>
           <div className={classes.columns}>
             <Link to={url+'/regions?show=States'} onClick={click} className={classes.name}><Typography className={classes.rows}>Estados</Typography></Link>
             <Link to={url+'/regions?show=Municipalities'} onClick={click} className={classes.name}><Typography className={classes.rows}>Municipios</Typography></Link>
+          </div>
+        </div>
+        <div className={classes.columnsContainer}>
+          <Typography className={classes.title}>Metodologías</Typography>
+          <div className={classes.columns}>
+            <a href={url+'/methodology#info'} onClick={click} className={classes.name}><Typography className={classes.rows}>Fuente de Información</Typography></a>
+            <a href={url+'/methodology#data'} onClick={click} className={classes.name}><Typography className={classes.rows}>Metodología de Visualización de Datos</Typography></a>
+            <a href={url+'/methodology#politic'} onClick={click} className={classes.name}><Typography className={classes.rows}>Analisis de la base de pruebasPolítica de Divulgación de Información</Typography></a>
           </div>
         </div>
       </div>
