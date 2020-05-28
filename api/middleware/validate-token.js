@@ -8,9 +8,8 @@ function validateToken(req, res, next) {
 		res.statusMessage = "Unauthorizated request. Loggin"
 		return res.status(401).end();
 	}
-    console.log(token)
+    
     jsonwebtoken.verify(token, secretToken, (err, decoded) =>{
-        console.log(err)
         if(err) {
             res.statusMessage = "La sesión ha finalizado. Inicia sesión para continuar.";
 		    return res.status(401).end();	    

@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { STATE_COLORS } from '../constants/states';
 import { getUrlParams } from '../Utils/tools';
+import { axiosDefault } from "../Utils/axiosApi";
 
 const genStates = (title, id, color) => {
   return {title, id, color};
@@ -69,7 +69,7 @@ const useRegion = () => {
 	};
   
   let callDataChart = ()  => {
-    axios.post(`${process.env.REACT_APP_MEXICOVID_API_URL}/region/data/states`, {})
+    axiosDefault.post(`/region/data/states`, {})
     .then(res => {
       setDataChart(res.data);
     });

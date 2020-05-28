@@ -55,7 +55,7 @@ exports.login = function (req, res) {
                         username: response.username
                     };
                     
-                    jsonwebtoken.sign(userData, secretToken, { expiresIn : '10m' }, (err, token) => {
+                    jsonwebtoken.sign(userData, secretToken, { expiresIn : '60m' }, (err, token) => {
                         if(err) {
                             res.statusMessage = error.message;
                             return res.status(400).end();

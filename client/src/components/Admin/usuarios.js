@@ -54,10 +54,11 @@ const columns = [
       minWidth: '200px',
     }
   },
-  { title: 'Contraseña', field: 'password'}
+  { title: 'Contraseña', field: 'password', readonly: true}
 
 ]
 const Usuarios = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const [state, setState] = React.useState({
     columns: columns,
@@ -70,7 +71,8 @@ const Usuarios = () => {
         return {...user, password: '*********'}
       });
       setState({columns: columns, data: data})
-      setError(null)
+      setError(null);
+      setIsLoading(false)
     }).catch((err) => {
       setState({...columns});
       setError({message: err.response.statusText})
@@ -83,6 +85,7 @@ const Usuarios = () => {
   
   return (
     <MaterialTable
+        isLoading={isLoading}
         icons={tableIcons}
         title="Usuarios"
         columns={state.columns}
@@ -109,20 +112,26 @@ const Usuarios = () => {
               deleteTooltip: 'Borrar',
               editTooltip: 'Editar',
               emptyDataSourceMessage: 'No hay usuarios que mostrar',
-              filterRow: {
+              filterRow: {  
                   filterTooltip: 'Filtro'
+              },
+              editRow: {
+                saveTooltip: 'Acepto',
+                cancelTooltip: 'Cancelar',
+                deleteText: '¿Estás seguro que deseas borrarlo?'
               }
           }
       }}
       editable={{onRowAdd: (newData) => 
         axiosUsers.post(`/user/create`, newData)
         .then( (response) => {
+          response.data.password = '*********';
           setState((prevState) => {
             const data = [...prevState.data];
             data.push(response.data);
             return { ...prevState, data };
           });
-          setError(null)
+          setError(null);
         }).catch((err) => {
           setError({message: err.response.statusText})
           return null;

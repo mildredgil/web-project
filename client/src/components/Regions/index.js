@@ -14,9 +14,7 @@ import { RegionContext } from '../../contexts/RegionContext';
 const Regions = ({ classes }) => {
 	const { isState, changeState } = React.useContext(RegionContext);
 	
-
 	const isMobile = window.innerWidth < 1000;
-	document.title = "Seguimiento por municipio | MexiCOVID";
 	const title = `Seguimiento por ${isState ? 'Estado' : 'Municipio'}`;
 	const subtitle = `${isMobile ? '' : 'Seguimiento por'} ${isState ? 'Municipio' : 'Estado'}`;
 	return (
