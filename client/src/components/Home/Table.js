@@ -250,7 +250,7 @@ const EnhancedTable = () => {
   const handleClose = () => {
     setOpen(false);
   };  
-
+  console.log(rows)
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
