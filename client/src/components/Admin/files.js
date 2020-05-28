@@ -44,6 +44,15 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
+let formatDate = (date) => {
+  console.log("date", date, typeof(date))
+  if(typeof(date) === "string") {
+    return date.split("/").join("-");
+  } else {
+    return (date.getMonth() + 1) + "-" + date.getDate()  + "-" + date.getFullYear();
+  }
+}
+
 const Files = ({classes}) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [state, setState] = React.useState({
@@ -64,7 +73,7 @@ const Files = ({classes}) => {
         let colu;  
         if(col == "date") {
             colu = {
-              title: 'Fecha', field: 'date', type: 'date'
+              title: 'Fecha', field: 'date', readonly: true, type: 'date'
             }
           } else {
             colu = {
@@ -164,17 +173,22 @@ const Files = ({classes}) => {
               }, 600);
             }),
           onRowUpdate: (newData, oldData) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-                if (oldData) {
-                  setState((prevState) => {
-                    const data = [...prevState.data];
-                    data[data.indexOf(oldData)] = newData;
-                    return { ...prevState, data };
-                  });
-                }
-              }, 600);
+            axiosUsers.put(`/region/update/csv/${formatDate(newData.date)}`, {
+              data: {
+                ...newData,
+                date: formatDate(newData.date)
+              }
+            })
+            .then( (response) => {
+              if (oldData) {
+                setState((prevState) => {
+                  const data = [...prevState.data];
+                  data[data.indexOf(oldData)] = response.data;
+                  return { ...prevState, data };
+                });
+              }
+            }).catch((err) => {
+              return null;
             }),
           onRowDelete: (oldData) =>
             new Promise((resolve) => {

@@ -37,7 +37,7 @@ const Footer = ({ classes}) => {
           <div className={classes.columns}>
             <a href={url+'/methodology#info'} onClick={click} className={classes.name}><Typography className={classes.rows}>Fuente de Información</Typography></a>
             <a href={url+'/methodology#data'} onClick={click} className={classes.name}><Typography className={classes.rows}>Metodología de Visualización de Datos</Typography></a>
-            <a href={url+'/methodology#politic'} onClick={click} className={classes.name}><Typography className={classes.rows}>Analisis de la base de pruebasPolítica de Divulgación de Información</Typography></a>
+            <a href={url+'/methodology#politic'} onClick={click} className={classes.name}><Typography className={classes.rows}>Política de Divulgación de Información</Typography></a>
           </div>
         </div>
       </div>
