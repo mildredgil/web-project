@@ -91,7 +91,7 @@ const Map = ({classes}) => {
           <MunMapMov/>
         }
       {!isMobile && <ColorsGradientBar selectedLabel={selectedLabel} thresholdsNum={thresholdsNum} />}
-      {geojson && geojson.features.length == 32 && <MapGL
+      {(( !isMobile && geojson && geojson.features.length == 32)||(isMap && isMobile && geojson && geojson.features.length == 32)) && <MapGL
         style={{ width: '100%', height: '100%' }}
         mapStyle='mapbox://styles/mildredg/ck8xwex5j19ei1iqkha7x2sko'
         accessToken={process.env.REACT_APP_MAP_BOX_API_KEY}
@@ -160,7 +160,8 @@ const styles = () => ({
   },
 
   show: {
-    flex: '2'
+    flex: '2',
+    height: 'calc(100vh - 160px)'
   },
 
   icons: {

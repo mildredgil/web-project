@@ -165,6 +165,7 @@ const useHome = () => {
   }
 
   let onChangeTab = (bool) => {
+    console.log("tab", bool)
     setIsMap(bool);
   }
 
