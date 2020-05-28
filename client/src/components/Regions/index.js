@@ -35,7 +35,6 @@ const Regions = ({ classes }) => {
 			<div className={classes.container}>
 					{isState ?<States/>: <Municipalities/>}
 			</div>
-			{!isMobile ? <Footer/>:<div></div>}
 		</div>
 	);
 }
